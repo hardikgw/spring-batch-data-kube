@@ -5,7 +5,7 @@
 
 	<groupId>biz.cits.batch</groupId>
 	<artifactId>batch-demo</artifactId>
-	<version>1.0.1-RELEASE</version>
+	<version>1.1.1-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>batch-demo</name>
