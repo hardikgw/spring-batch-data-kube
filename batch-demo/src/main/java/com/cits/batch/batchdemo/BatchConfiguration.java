@@ -6,6 +6,8 @@ import javax.sql.DataSource;
 import com.cits.batch.batchdemo.job.JobCompletionNotificationListener;
 import com.cits.batch.batchdemo.model.Person;
 import com.cits.batch.batchdemo.service.PersonItemProcessor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
@@ -26,10 +28,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.cloud.task.configuration.EnableTask;
 
 @Configuration
-@EnableBatchProcessing
 public class BatchConfiguration {
+
+    private static Log logger
+            = LogFactory.getLog(BatchConfiguration.class);
 
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
@@ -72,9 +77,7 @@ public class BatchConfiguration {
         return jobBuilderFactory.get("importUserJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-                .flow(step1)
-                .end()
-                .build();
+                .start(step1).build();
     }
 
     @Bean
