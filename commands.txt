@@ -1,0 +1,19 @@
+cd binaries
+
+curl -O https://repo.spring.io/release/org/springframework/cloud/spring-cloud-dataflow-server-local/1.6.3.RELEASE/spring-cloud-dataflow-server-local-1.6.3.RELEASE.jar
+curl -O https://repo.spring.io/release/org/springframework/cloud/spring-cloud-dataflow-shell/1.6.3.RELEASE/spring-cloud-dataflow-shell-1.6.3.RELEASE.jar
+
+curl -O https://repo.spring.io/release/org/springframework/cloud/spring-cloud-skipper-server/1.0.9.RELEASE/spring-cloud-skipper-server-1.0.9.RELEASE.jar
+curl -O https://repo.spring.io/release/org/springframework/cloud/spring-cloud-skipper-shell/1.0.9.RELEASE/spring-cloud-skipper-shell-1.0.9.RELEASE.jar
+
+java -jar spring-cloud-skipper-server-1.0.9.RELEASE.jar
+
+java -jar spring-cloud-dataflow-server-local-1.6.3.RELEASE.jar --spring.cloud.dataflow.features.skipper-enabled=true
+java -jar spring-cloud-dataflow-shell-1.6.3.RELEASE.jar --dataflow.mode=skipper
+
+http://localhost:9393/dashboard
+
+###>>> DATA FLOW SHELL
+app register --name batch-job --type task --uri maven://biz.cits.batch:batch-demo:1.1.2-RELEASE
+
+task create demo-job --definition batch-job
