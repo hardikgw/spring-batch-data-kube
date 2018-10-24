@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: batch-demo-cronjob
+spec:
+  schedule: "1 2-14 * * 0-1,5-6"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: batch-demo-cronjob
+            image: docker.io/cithub/batch-demo-cron
+          restartPolicy: OnFailure
